@@ -1,0 +1,1 @@
+premium_acc tablosu account kısmına okutulacak. player tablosundakiler ise uygun şekilde design table üzerinden eklenecek.
