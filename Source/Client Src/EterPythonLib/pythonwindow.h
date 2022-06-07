@@ -45,3 +45,27 @@ int				GetChildCount()	{ return m_pChildList.size(); }
 			float m_fCoolTime;
 			float m_fCoolElapsedTime;
 			float m_fCoolTimeStart;
+
+//arat
+
+void SetRenderingMode(int iMode);
+
+//altına ekle
+
+			D3DXCOLOR GetPixelColor(int x, int y) { if (m_pImageInstance) return m_pImageInstance->GetPixelColor(x, y); else return D3DXCOLOR(0, 0, 0, 0); }
+
+//arat
+
+		public:
+			CWindow(PyObject * ppyObject);
+			virtual ~CWindow();
+
+//üstüne ekle
+
+		enum WindowTypes // window type flags to recognize expanded_image class
+		{
+			WINDOW_TYPE_WINDOW,
+			WINDOW_TYPE_EX_IMAGE,
+
+			WINDOW_TYPE_MAX_NUM
+		};
