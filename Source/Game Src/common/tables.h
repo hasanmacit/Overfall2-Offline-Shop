@@ -9,6 +9,15 @@
 #endif
 
 //arat
+	HEADER_GD_REQUEST_CHANNELSTATUS = 140,
+
+// altına ekle
+
+#ifdef ENABLE_CHANNEL_SWITCH_SYSTEM
+	HEADER_GD_FIND_CHANNEL = 144,
+#endif
+
+//arat
 
 } TShopTable;
 
