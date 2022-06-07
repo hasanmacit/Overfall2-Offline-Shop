@@ -839,7 +839,7 @@ def MakeNewScrollBar(parent, x, y, height):
 			self.eventFunc = {"mouse_click" : None, "mouse_over_in" : None, "mouse_over_out" : None}
 			self.eventArgs = {"mouse_click" : None, "mouse_over_in" : None, "mouse_over_out" : None}
 
-#değiştir
+#değiştir (yoksa def __init__ içine ekle)
 
 		self.eventFunc = {"mouse_rclick" : None, "mouse_click" : None, "mouse_over_in" : None, "mouse_over_out" : None}
 		self.eventArgs = {"mouse_rclick" : None, "mouse_click" : None, "mouse_over_in" : None, "mouse_over_out" : None}
@@ -848,3 +848,66 @@ def MakeNewScrollBar(parent, x, y, height):
 
 		self.eventFunc = None
 		self.eventArgs = None
+
+#yine aynı classta arat
+
+	def OnMouseOverIn(self):
+		try:
+			self.eventDict["MOUSE_OVER_IN"]()
+		except KeyError:
+			pass
+
+	def OnMouseOverOut(self):
+		try:
+			self.eventDict["MOUSE_OVER_OUT"]()
+		except KeyError:
+			pass
+
+	def SAFE_SetStringEvent(self, event, func):
+		self.eventDict[event]=__mem_func__(func)
+
+#değiştir
+
+	def SetEvent(self, func, *args):
+		result = self.eventFunc.has_key(args[0])
+		if result:
+			self.eventFunc[args[0]] = func
+			self.eventArgs[args[0]] = args
+		else:
+			print "[ERROR] ui.py SetEvent, Can`t Find has_key : %s" % args[0]
+
+	def OnMouseLeftButtonDown(self) :
+		if self.eventFunc["mouse_click"] :
+			apply(self.eventFunc["mouse_click"], self.eventArgs["mouse_click"])
+		else:
+			try:
+				apply(self.eventDict["MOUSE_CLICK"][0], self.eventDict["MOUSE_CLICK"][1])
+			except KeyError:
+				pass
+	
+	def OnMouseRightButtonDown(self) :
+		if self.eventFunc["mouse_rclick"] :
+			apply(self.eventFunc["mouse_rclick"], self.eventArgs["mouse_rclick"])
+		else:
+			try:
+				apply(self.eventDict["MOUSE_RCLICK"][0], self.eventDict["MOUSE_RCLICK"][1])
+			except KeyError:
+				pass
+
+	def OnMouseOverIn(self) :
+		if self.eventFunc["mouse_over_in"] :
+			apply(self.eventFunc["mouse_over_in"], self.eventArgs["mouse_over_in"])
+		else:
+			try:
+				apply(self.eventDict["MOUSE_OVER_IN"][0], self.eventDict["MOUSE_OVER_IN"][1])
+			except KeyError:
+				pass
+
+	def OnMouseOverOut(self) :
+		if self.eventFunc["mouse_over_out"] :
+			apply(self.eventFunc["mouse_over_out"], self.eventArgs["mouse_over_out"])
+		else :
+			try:
+				apply(self.eventDict["MOUSE_OVER_OUT"][0], self.eventDict["MOUSE_OVER_OUT"][1])
+			except KeyError:
+				pass
